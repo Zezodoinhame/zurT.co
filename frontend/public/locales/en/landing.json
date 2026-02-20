@@ -20,7 +20,11 @@
     "floatingGoalTitle": "Savings Goal",
     "floatingGoalAmount": "R$ 50,000.00",
     "floatingGoalStatus": "Completed in April",
-    "floatingAlert": "High concentration in fixed income"
+    "floatingAlert": "High concentration in fixed income",
+    "trustBadge": "Certified Open Finance Platform",
+    "statInstitutions": "200+ institutions",
+    "statIntegrated": "Open Finance integrated",
+    "statReadOnly": "Read-only access"
   },
   "about": {
     "heading": "Discover the platform",

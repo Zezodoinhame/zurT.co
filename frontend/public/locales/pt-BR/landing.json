@@ -20,7 +20,11 @@
     "floatingGoalTitle": "Meta de Reserva",
     "floatingGoalAmount": "R$ 50.000,00",
     "floatingGoalStatus": "Concluído em abril",
-    "floatingAlert": "Concentração em renda fixa elevada"
+    "floatingAlert": "Concentração em renda fixa elevada",
+    "trustBadge": "Plataforma certificada Open Finance",
+    "statInstitutions": "200+ instituições",
+    "statIntegrated": "Open Finance integrado",
+    "statReadOnly": "Acesso somente leitura"
   },
   "about": {
     "heading": "Conheça a plataforma",
