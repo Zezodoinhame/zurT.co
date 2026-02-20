@@ -12,36 +12,36 @@ interface KpiCardProps {
 
 const KpiCard = ({ title, value, change, changeType = "neutral", icon: Icon, subtitle }: KpiCardProps) => {
   return (
-    <div className="bg-gray-800 rounded-xl p-4 border border-gray-700 transition-all duration-300 hover:border-orange-500/50 hover:shadow-lg">
+    <div className="kpi-card">
       <div className="flex items-start justify-between mb-3">
-        <span className="text-sm text-gray-400 font-medium">{title}</span>
+        <span className="text-sm text-muted-foreground font-medium">{title}</span>
         {Icon && (
-          <div className="w-9 h-9 rounded-lg bg-gray-700 flex items-center justify-center">
-            <Icon className="h-5 w-5 text-gray-400" />
+          <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+            <Icon className="h-5 w-5 text-primary/70" />
           </div>
         )}
       </div>
-      
-      <div className="text-2xl md:text-3xl font-bold text-white mb-1">
+
+      <div className="text-2xl md:text-3xl font-bold text-foreground mb-1 tracking-tight">
         {value}
       </div>
-      
+
       {(change || subtitle) && (
         <div className="flex items-center gap-2">
           {change && (
             <span
               className={cn(
                 "text-sm font-medium",
-                changeType === "positive" && "text-green-400",
-                changeType === "negative" && "text-red-400",
-                changeType === "neutral" && "text-gray-400"
+                changeType === "positive" && "text-success",
+                changeType === "negative" && "text-destructive",
+                changeType === "neutral" && "text-muted-foreground"
               )}
             >
               {change}
             </span>
           )}
           {subtitle && (
-            <span className="text-sm text-gray-500">{subtitle}</span>
+            <span className="text-sm text-muted-foreground/70">{subtitle}</span>
           )}
         </div>
       )}

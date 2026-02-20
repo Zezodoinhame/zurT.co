@@ -1,47 +1,16 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useMemo, memo } from "react";
 import {
-  LayoutDashboard,
-  Link2,
-  Wallet,
-  CreditCard,
-  TrendingUp,
-  FileText,
-  FilePlus,
-  History,
-  Target,
-  Calculator,
-  Settings,
-  ChevronLeft,
-  ChevronRight,
-  Users,
-  GitBranch,
-  Shield,
-  Activity,
-  Clock,
-  Receipt,
-  Search,
-  MessageSquare,
-  DollarSign,
-  UserPlus,
-  Bell,
-  Package,
-  ChevronDown,
-  ChevronUp,
-  Globe,
-  BarChart2,
-  PieChart,
-  LogOut,
+  LayoutDashboard, Link2, Wallet, CreditCard, TrendingUp, FileText, FilePlus, History,
+  Target, Calculator, Settings, ChevronLeft, ChevronRight, Users, GitBranch, Shield,
+  Activity, Clock, Receipt, Search, MessageSquare, DollarSign, UserPlus, Bell, Package,
+  ChevronDown, ChevronUp, Globe, BarChart2, PieChart, LogOut,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
@@ -68,12 +37,12 @@ interface NavSubItem {
 interface NavItem {
   icon: any;
   label: string;
-  id?: string; // Stable identifier for expand tracking (used instead of label which changes with i18n)
-  href?: string; // Optional if it has subitems
-  enabled?: boolean; // Whether this menu item is enabled/active
-  subItems?: NavSubItem[]; // Submenu items
-  section?: string; // Optional section label for grouping (shown when sidebar expanded)
-  iconClass?: string; // Optional custom class for icon styling
+  id?: string;
+  href?: string;
+  enabled?: boolean;
+  subItems?: NavSubItem[];
+  section?: string;
+  iconClass?: string;
 }
 
 const Sidebar = memo(({ collapsed = false, onCollapse, mobileOpen = false, onMobileOpenChange }: SidebarProps) => {
@@ -83,7 +52,7 @@ const Sidebar = memo(({ collapsed = false, onCollapse, mobileOpen = false, onMob
   const isMobile = useIsMobile();
   const { t } = useTranslation('layout');
 
-  // Customer navigation items - all enabled, with sections for clearer hierarchy
+  // Customer navigation items
   const customerNavItems: NavItem[] = useMemo(() => [
     { icon: LayoutDashboard, label: t('sidebar.nav.dashboard'), href: "/app/dashboard", enabled: true, section: t('sidebar.sections.principal') },
     { icon: Bell, label: t('sidebar.nav.notifications'), href: "/app/notifications", enabled: true, section: t('sidebar.sections.principal') },
@@ -92,27 +61,17 @@ const Sidebar = memo(({ collapsed = false, onCollapse, mobileOpen = false, onMob
     { icon: Package, label: t('sidebar.nav.plans'), href: "/app/plans", enabled: true, section: t('sidebar.sections.principal') },
     { icon: PieChart, label: t('sidebar.nav.assets'), href: "/app/assets", enabled: true, section: t('sidebar.sections.financeiro') },
     {
-      icon: Link2,
-      label: t('sidebar.nav.connections'),
-      id: "connections",
-      enabled: true,
-      section: t('sidebar.sections.financeiro'),
+      icon: Link2, label: t('sidebar.nav.connections'), id: "connections", enabled: true, section: t('sidebar.sections.financeiro'),
       subItems: [
         { label: t('sidebar.nav.openFinance'), href: "/app/connections/open-finance", enabled: true, icon: Globe },
-        // B3 hidden until implementation is ready
-        // { label: t('sidebar.nav.b3'), href: "/app/connections/b3", enabled: true, icon: BarChart2 },
       ],
     },
     { icon: Wallet, label: t('sidebar.nav.accounts'), href: "/app/accounts", enabled: true, section: t('sidebar.sections.financeiro') },
     { icon: Receipt, label: t('sidebar.nav.transactions'), href: "/app/transactions", enabled: true, section: t('sidebar.sections.financeiro') },
-    { icon: CreditCard, label: t('sidebar.nav.cards'), href: "/app/cards", enabled: true, section: t('sidebar.sections.financeiro'),  },
+    { icon: CreditCard, label: t('sidebar.nav.cards'), href: "/app/cards", enabled: true, section: t('sidebar.sections.financeiro') },
     { icon: TrendingUp, label: t('sidebar.nav.investments'), href: "/app/investments", enabled: true, section: t('sidebar.sections.financeiro') },
     {
-      icon: FileText,
-      label: t('sidebar.nav.reports'),
-      id: "reports",
-      enabled: true,
-      section: t('sidebar.sections.relatorios'),
+      icon: FileText, label: t('sidebar.nav.reports'), id: "reports", enabled: true, section: t('sidebar.sections.relatorios'),
       subItems: [
         { label: t('sidebar.nav.generateReport'), href: "/app/reports", enabled: true, icon: FilePlus },
         { label: t('sidebar.nav.history'), href: "/app/reports/history", enabled: true, icon: History },
@@ -122,7 +81,7 @@ const Sidebar = memo(({ collapsed = false, onCollapse, mobileOpen = false, onMob
     { icon: Calculator, label: t('sidebar.nav.calculators'), href: "/app/calculators", enabled: true, section: t('sidebar.sections.ferramentas') },
   ], [t]);
 
-  // Consultant navigation items - all enabled
+  // Consultant navigation items
   const consultantNavItems: NavItem[] = useMemo(() => [
     { icon: LayoutDashboard, label: t('sidebar.nav.dashboard'), href: "/consultant/dashboard", enabled: true, section: t('sidebar.sections.principal') },
     { icon: Bell, label: t('sidebar.nav.notifications'), href: "/consultant/notifications", enabled: true, section: t('sidebar.sections.principal') },
@@ -136,7 +95,7 @@ const Sidebar = memo(({ collapsed = false, onCollapse, mobileOpen = false, onMob
     { icon: TrendingUp, label: t('sidebar.nav.simulator'), href: "/consultant/simulator", enabled: true, section: t('sidebar.sections.ferramentas') },
   ], [t]);
 
-  // Admin navigation items - all enabled
+  // Admin navigation items
   const adminNavItems: NavItem[] = useMemo(() => [
     { icon: LayoutDashboard, label: t('sidebar.nav.dashboard'), href: "/admin/dashboard", enabled: true, section: t('sidebar.sections.principal') },
     { icon: Bell, label: t('sidebar.nav.notifications'), href: "/admin/notifications", enabled: true, section: t('sidebar.sections.principal') },
@@ -150,85 +109,67 @@ const Sidebar = memo(({ collapsed = false, onCollapse, mobileOpen = false, onMob
     { icon: Clock, label: t('sidebar.nav.loginHistory'), href: "/admin/login-history", enabled: true, section: t('sidebar.sections.sistema') },
   ], [t]);
 
-  // Get navigation items based on user role
   const getNavItems = () => {
-    if (!user) return customerNavItems; // Default to customer if user not loaded
-    
+    if (!user) return customerNavItems;
     switch (user.role) {
-      case 'consultant':
-        return consultantNavItems;
-      case 'admin':
-        return adminNavItems;
-      default:
-        return customerNavItems;
+      case 'consultant': return consultantNavItems;
+      case 'admin': return adminNavItems;
+      default: return customerNavItems;
     }
   };
 
-  // Get dashboard path based on user role
   const getDashboardPath = () => {
     if (!user) return '/app/dashboard';
-    
     switch (user.role) {
-      case 'consultant':
-        return '/consultant/dashboard';
-      case 'admin':
-        return '/admin/dashboard';
-      default:
-        return '/app/dashboard';
+      case 'consultant': return '/consultant/dashboard';
+      case 'admin': return '/admin/dashboard';
+      default: return '/app/dashboard';
     }
   };
 
   const navItems = getNavItems();
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
 
-  // Check if a path matches any subitem
   const isSubItemActive = (subItems?: NavSubItem[]): boolean => {
     if (!subItems) return false;
     return subItems.some(subItem => location.pathname === subItem.href);
   };
 
-  // Toggle expanded state for items with submenus
   const toggleExpanded = (key: string) => {
     setExpandedItems(prev => {
       const next = new Set(prev);
-      if (next.has(key)) {
-        next.delete(key);
-      } else {
-        next.add(key);
-      }
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
       return next;
     });
   };
 
-  // Auto-expand items with active subitems
   useEffect(() => {
     navItems.forEach(item => {
       if (item.subItems && isSubItemActive(item.subItems)) {
         setExpandedItems(prev => new Set(prev).add(item.id || item.label));
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
-  // Shared navigation content component
   const NavigationContent = ({ showLabels = true, onLinkClick }: { showLabels?: boolean; onLinkClick?: () => void }) => (
     <>
-      {/* Logo / header - when collapsed, center logo and position toggle button absolute so logo stays centered */}
-      <div
-        className={cn(
-          "flex items-center h-16 shrink-0",
-          showLabels ? "justify-between px-4" : "justify-center relative px-0"
-        )}
-      >
-        {showLabels && (
-          <Link to={getDashboardPath()} className="flex items-center gap-3 min-w-0" onClick={onLinkClick}>
-            <img src="/logo.png" alt="zurT Logo" className="h-9 w-9 object-contain shrink-0" />
-            <span className="font-bold text-lg text-white truncate tracking-tight">zurT</span>
+      {/* Logo */}
+      <div className={cn(
+        "flex items-center h-14 shrink-0 border-b border-sidebar-border",
+        showLabels ? "justify-between px-4" : "justify-center relative px-0"
+      )}>
+        {showLabels ? (
+          <Link to={getDashboardPath()} className="flex items-center gap-2.5 min-w-0" onClick={onLinkClick}>
+            <img src="/logo.png" alt="zurT Logo" className="h-8 w-8 object-contain shrink-0" />
+            <span className="font-heading font-bold text-lg tracking-tight">
+              <span className="text-primary">z</span>
+              <span className="text-white">urT</span>
+            </span>
           </Link>
-        )}
-        {!showLabels && (
+        ) : (
           <Link to={getDashboardPath()} className="flex shrink-0" onClick={onLinkClick}>
-            <img src="/logo.png" alt="zurT Logo" className="h-9 w-9 object-contain" />
+            <img src="/logo.png" alt="zurT Logo" className="h-8 w-8 object-contain" />
           </Link>
         )}
         {!isMobile && (
@@ -237,217 +178,206 @@ const Sidebar = memo(({ collapsed = false, onCollapse, mobileOpen = false, onMob
             size="icon"
             onClick={onCollapse}
             className={cn(
-              "h-8 w-8 shrink-0 text-sidebar-foreground hover:bg-sidebar-accent hover:text-white rounded-lg transition-all duration-200",
-              !showLabels && "absolute right-1 top-1/2 -translate-y-1/2"
+              "h-7 w-7 shrink-0 text-sidebar-foreground hover:bg-sidebar-accent hover:text-white rounded-md transition-all",
+              !showLabels && "absolute right-1.5 top-1/2 -translate-y-1/2"
             )}
             aria-label={collapsed ? t('sidebar.expandMenu') : t('sidebar.collapseMenu')}
           >
-            {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+            {collapsed ? <ChevronRight className="h-3.5 w-3.5" /> : <ChevronLeft className="h-3.5 w-3.5" />}
           </Button>
         )}
       </div>
 
-      {/* Navigation - scrollable, with section labels when expanded */}
+      {/* Navigation */}
       <ScrollArea className="flex-1 min-h-0">
         <nav className="px-2 py-3 space-y-0.5">
-        {navItems.map((item, index) => {
-          const showSectionLabel = showLabels && item.section && (index === 0 || navItems[index - 1]?.section !== item.section);
-          const isEnabled = item.enabled !== false; // Default to true if not specified
-          const hasSubItems = item.subItems && item.subItems.length > 0;
-          const itemKey = item.id || item.label;
-          const isExpanded = expandedItems.has(itemKey);
-          const isSubActive = isSubItemActive(item.subItems);
-          const isActive = item.href
-            ? location.pathname === item.href || location.pathname.startsWith(item.href + "/")
-            : isSubActive;
-          
-          const sectionLabel = showSectionLabel && item.section ? (
-            <div key={`section-${item.section}`} className="pt-3 pb-1.5 px-3">
-              <span className="sidebar-section-header">{item.section}</span>
-            </div>
-          ) : null;
+          {navItems.map((item, index) => {
+            const showSectionLabel = showLabels && item.section && (index === 0 || navItems[index - 1]?.section !== item.section);
+            const isEnabled = item.enabled !== false;
+            const hasSubItems = item.subItems && item.subItems.length > 0;
+            const itemKey = item.id || item.label;
+            const isExpanded = expandedItems.has(itemKey);
+            const isSubActive = isSubItemActive(item.subItems);
+            const isActive = item.href
+              ? location.pathname === item.href || location.pathname.startsWith(item.href + "/")
+              : isSubActive;
 
-          // Render disabled items differently
-          if (!isEnabled) {
+            const sectionLabel = showSectionLabel && item.section ? (
+              <div key={`section-${item.section}`} className="pt-4 pb-1.5 px-3 first:pt-0">
+                <span className="sidebar-section-header">{item.section}</span>
+              </div>
+            ) : null;
+
+            // Disabled items
+            if (!isEnabled) {
+              return (
+                <React.Fragment key={item.label}>
+                  {sectionLabel}
+                  <div
+                    className={cn(
+                      "flex items-center gap-3 py-2 rounded-lg text-sm font-medium cursor-not-allowed opacity-40",
+                      showLabels ? "px-3" : "px-2 justify-center"
+                    )}
+                    title={t('sidebar.comingSoon')}
+                  >
+                    <item.icon className="h-[18px] w-[18px] flex-shrink-0" />
+                    {showLabels && <span>{item.label}</span>}
+                  </div>
+                </React.Fragment>
+              );
+            }
+
+            // Collapsed sidebar with submenus → dropdown
+            if (hasSubItems && !showLabels) {
+              return (
+                <React.Fragment key={item.label}>
+                  {sectionLabel}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button
+                        className={cn(
+                          "sidebar-nav-item w-full flex flex-col items-center justify-center gap-0.5 px-2 py-2 text-sm font-medium",
+                          isActive ? "active text-white" : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                        )}
+                        title={`${item.label}`}
+                      >
+                        <item.icon className={cn("h-[18px] w-[18px]", isActive && "text-sidebar-primary", item.iconClass)} />
+                        <ChevronDown className="h-3 w-3 opacity-50" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent side="right" align="start" sideOffset={8} className="min-w-[11rem]">
+                      <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground">{item.label}</DropdownMenuLabel>
+                      {item.subItems!.map((subItem) => {
+                        const isSubActive = location.pathname === subItem.href;
+                        if (subItem.enabled === false) {
+                          return (
+                            <DropdownMenuItem key={subItem.href} disabled className="opacity-50">
+                              {subItem.icon && <subItem.icon className="mr-2 h-4 w-4" />}
+                              {subItem.label}
+                            </DropdownMenuItem>
+                          );
+                        }
+                        const SubIcon = subItem.icon;
+                        return (
+                          <DropdownMenuItem
+                            key={subItem.href}
+                            onClick={() => { navigate(subItem.href); onLinkClick?.(); }}
+                            className={cn("flex items-center gap-2", isSubActive && "bg-accent font-medium")}
+                          >
+                            {SubIcon && <SubIcon className="h-4 w-4" />}
+                            {subItem.label}
+                          </DropdownMenuItem>
+                        );
+                      })}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </React.Fragment>
+              );
+            }
+
+            // Expanded sidebar with submenus → expandable
+            if (hasSubItems && showLabels) {
+              return (
+                <React.Fragment key={item.label}>
+                  {sectionLabel}
+                  <div>
+                    <button
+                      onClick={() => toggleExpanded(itemKey)}
+                      className={cn(
+                        "sidebar-nav-item w-full flex items-center justify-between gap-3 px-3 py-2 text-sm font-medium",
+                        isActive ? "active text-white" : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <item.icon className={cn("h-[18px] w-[18px]", isActive && "text-sidebar-primary", item.iconClass)} />
+                        <span>{item.label}</span>
+                      </div>
+                      {isExpanded
+                        ? <ChevronUp className="h-3.5 w-3.5 opacity-50" />
+                        : <ChevronDown className="h-3.5 w-3.5 opacity-50" />
+                      }
+                    </button>
+                    {isExpanded && (
+                      <div className="ml-[18px] mt-0.5 space-y-0.5 border-l border-sidebar-border/50 pl-3 ml-5">
+                        {item.subItems!.map((subItem) => {
+                          const isSubActive = location.pathname === subItem.href;
+                          if (subItem.enabled === false) {
+                            const DisabledSubIcon = subItem.icon;
+                            return (
+                              <div key={subItem.href} className="flex items-center gap-2 px-2 py-1.5 text-xs text-muted-foreground opacity-40 cursor-not-allowed">
+                                {DisabledSubIcon && <DisabledSubIcon className="h-3.5 w-3.5" />}
+                                <span>{subItem.label}</span>
+                              </div>
+                            );
+                          }
+                          const SubIcon = subItem.icon;
+                          return (
+                            <Link
+                              key={subItem.href}
+                              to={subItem.href}
+                              onClick={onLinkClick}
+                              className={cn(
+                                "flex items-center gap-2 px-2 py-1.5 text-xs rounded-md transition-colors",
+                                isSubActive
+                                  ? "bg-sidebar-active-bg text-sidebar-primary font-medium"
+                                  : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                              )}
+                            >
+                              {SubIcon && <SubIcon className="h-3.5 w-3.5 opacity-60" />}
+                              <span>{subItem.label}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </React.Fragment>
+              );
+            }
+
+            // Regular items
             return (
-              <React.Fragment key={item.label}>
+              <React.Fragment key={item.href || item.label}>
                 {sectionLabel}
-                <div
+                <Link
+                  to={item.href || '#'}
+                  onClick={onLinkClick}
                   className={cn(
-                    "flex items-center gap-3 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-not-allowed opacity-50",
-                    showLabels ? "px-3" : "px-2 justify-center"
+                    "sidebar-nav-item flex items-center gap-3 py-2 text-sm font-medium relative",
+                    showLabels ? "px-3" : "px-2 justify-center",
+                    isActive ? "active text-white" : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
                   )}
-                  title={t('sidebar.comingSoon')}
                 >
-                  <item.icon className="h-5 w-5 flex-shrink-0" />
+                  {/* Active indicator bar */}
+                  {isActive && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full bg-sidebar-primary" />
+                  )}
+                  <item.icon className={cn("h-[18px] w-[18px]", isActive && "text-sidebar-primary", item.iconClass)} />
                   {showLabels && <span>{item.label}</span>}
-                </div>
+                </Link>
               </React.Fragment>
             );
-          }
-
-          // Render items with submenus - collapsed: dropdown to the right (icon + chevron-down = "has submenu")
-          if (hasSubItems && !showLabels) {
-            return (
-              <DropdownMenu key={item.label}>
-                <DropdownMenuTrigger asChild>
-                  <button
-                    className={cn(
-                      "sidebar-nav-item w-full flex flex-col items-center justify-center gap-0.5 px-2 py-2.5 text-sm font-medium",
-                      isActive
-                        ? "active bg-sidebar-active-bg text-white"
-                        : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
-                    )}
-                    title={`${item.label} — ${t('sidebar.clickToSeeOptions')}`}
-                    aria-label={`${item.label}, submenu`}
-                  >
-                    <item.icon className={cn("sidebar-icon", isActive && "text-sidebar-primary", item.iconClass)} />
-                    <ChevronDown className="h-3.5 w-3.5 flex-shrink-0 opacity-70" aria-hidden />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent side="right" align="start" sideOffset={8} className="min-w-[11rem]">
-                  <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground normal-case">
-                    {item.label}
-                  </DropdownMenuLabel>
-                  {item.subItems!.map((subItem) => {
-                    const isSubActive = location.pathname === subItem.href;
-                    const isSubEnabled = subItem.enabled !== false;
-                    if (!isSubEnabled) {
-                      return (
-                        <DropdownMenuItem key={subItem.href} disabled className="opacity-50">
-                          {subItem.icon && <subItem.icon className="mr-2 h-4 w-4 shrink-0" />}
-                          {subItem.label}
-                        </DropdownMenuItem>
-                      );
-                    }
-                    const SubIcon = subItem.icon;
-                    return (
-                      <DropdownMenuItem
-                        key={subItem.href}
-                        onClick={() => {
-                          navigate(subItem.href);
-                          onLinkClick?.();
-                        }}
-                        className={cn("flex items-center gap-2", isSubActive && "bg-accent font-medium")}
-                      >
-                        {SubIcon && <SubIcon className="h-4 w-4 shrink-0" />}
-                        {subItem.label}
-                      </DropdownMenuItem>
-                    );
-                  })}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            );
-          }
-
-          // Render items with submenus - expanded: inline expandable list
-          if (hasSubItems && showLabels) {
-            return (
-              <div key={item.label}>
-                <button
-                  onClick={() => toggleExpanded(itemKey)}
-                  className={cn(
-                    "sidebar-nav-item w-full flex items-center justify-between gap-3 px-3 py-2.5 text-sm font-medium",
-                    isActive
-                      ? "active bg-sidebar-active-bg text-white"
-                      : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <item.icon className={cn("sidebar-icon", isActive && "text-sidebar-primary", item.iconClass)} />
-                    <span>{item.label}</span>
-                  </div>
-                  {isExpanded ? (
-                    <ChevronUp className="h-4 w-4 flex-shrink-0 opacity-70" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 flex-shrink-0 opacity-70" />
-                  )}
-                </button>
-                {isExpanded && (
-                  <div className="ml-4 mt-1 space-y-1 border-l border-sidebar-border pl-3">
-                    {item.subItems!.map((subItem) => {
-                      const isSubActive = location.pathname === subItem.href;
-                      const isSubEnabled = subItem.enabled !== false;
-
-                      if (!isSubEnabled) {
-                        const DisabledSubIcon = subItem.icon;
-                        return (
-                          <div
-                            key={subItem.href}
-                            className="flex items-center gap-2 px-2 py-1.5 text-xs text-muted-foreground opacity-50 cursor-not-allowed"
-                          >
-                            {DisabledSubIcon && <DisabledSubIcon className="h-3.5 w-3.5 shrink-0" />}
-                            <span>{subItem.label}</span>
-                          </div>
-                        );
-                      }
-
-                      const SubIcon = subItem.icon;
-                      return (
-                        <Link
-                          key={subItem.href}
-                          to={subItem.href}
-                          onClick={onLinkClick}
-                          className={cn(
-                            "flex items-center gap-2 px-2 py-1.5 text-xs rounded-md transition-all duration-200",
-                            isSubActive
-                              ? "bg-sidebar-active-bg text-sidebar-primary font-medium"
-                              : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                          )}
-                        >
-                          {SubIcon && <SubIcon className="h-3.5 w-3.5 shrink-0 opacity-70" />}
-                          <span>{subItem.label}</span>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          }
-
-          // Render regular items without submenus
-          return (
-            <Link
-              key={item.href || item.label}
-              to={item.href || '#'}
-              onClick={onLinkClick}
-              className={cn(
-                "sidebar-nav-item flex items-center gap-3 py-2.5 text-sm font-medium",
-                showLabels ? "px-3" : "px-2 justify-center",
-                isActive
-                  ? "active bg-sidebar-active-bg text-white"
-                  : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
-              )}
-            >
-              <item.icon className={cn("sidebar-icon", isActive && "text-sidebar-primary", item.iconClass)} />
-              {showLabels && <span>{item.label}</span>}
-            </Link>
-          );
-        })}
-      </nav>
+          })}
+        </nav>
       </ScrollArea>
 
-      {/* Logout button pinned to bottom */}
+      {/* Logout */}
       <div className="shrink-0 border-t border-sidebar-border">
         <button
-          onClick={() => {
-            logout();
-            if (onLinkClick) onLinkClick();
-          }}
+          onClick={() => { logout(); onLinkClick?.(); }}
           className={cn(
             "sidebar-nav-item flex items-center gap-3 py-3 text-sm font-medium text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent w-full transition-colors",
             showLabels ? "px-4" : "px-2 justify-center"
           )}
         >
-          <LogOut className="sidebar-icon" />
+          <LogOut className="h-[18px] w-[18px]" />
           {showLabels && <span>{t('topbar.logout')}</span>}
         </button>
       </div>
     </>
   );
 
-  // Mobile sidebar (Sheet)
+  // Mobile
   if (isMobile) {
     return (
       <Sheet open={mobileOpen} onOpenChange={onMobileOpenChange}>
@@ -463,13 +393,13 @@ const Sidebar = memo(({ collapsed = false, onCollapse, mobileOpen = false, onMob
     );
   }
 
-  // Desktop sidebar (hidden on screens < 1024px, lg = 1024px in Tailwind)
+  // Desktop
   return (
     <aside
       data-sidebar="true"
       className={cn(
         "hidden lg:flex flex-col h-screen sidebar-glass text-sidebar-foreground transition-all duration-300 sticky top-0",
-        collapsed ? "w-20" : "w-56"
+        collapsed ? "w-[68px]" : "w-56"
       )}
     >
       <NavigationContent showLabels={!collapsed} />
