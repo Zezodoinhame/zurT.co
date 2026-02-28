@@ -12,10 +12,12 @@ import { financeApi } from "@/lib/api";
 import { dashboardApi } from "@/lib/api-dashboard";
 import { useTranslation } from "react-i18next";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useAuth } from "@/hooks/useAuth";
 
 const Dashboard = () => {
   const { t } = useTranslation(['dashboard', 'common']);
   const { formatCurrency } = useCurrency();
+  const { user } = useAuth();
   const [openFinanceData, setOpenFinanceData] = useState<{
     accounts: any[];
     groupedAccounts: any[];
@@ -103,6 +105,15 @@ const Dashboard = () => {
 
   // Calculate net worth (subtracting debt to match Assets page)
   const netWorth = openFinanceData.totalBalance + openFinanceData.totalInvestments - cardDebt;
+
+  // Greeting based on time of day
+  const greeting = useMemo(() => {
+    const hour = new Date().getHours();
+    const firstName = user?.full_name?.split(' ')[0] || '';
+    if (hour < 12) return `Good morning${firstName ? `, ${firstName}` : ''}`;
+    if (hour < 18) return `Good afternoon${firstName ? `, ${firstName}` : ''}`;
+    return `Good evening${firstName ? `, ${firstName}` : ''}`;
+  }, [user]);
 
   // Define dashboard card configuration (must be before conditional returns)
   const dashboardCards = useMemo((): DashboardCard[] => {
@@ -271,7 +282,7 @@ const Dashboard = () => {
     return (
       <div className="flex flex-col flex-1 min-h-0">
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-10 w-10 border-2 border-primary border-t-transparent" />
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent" />
         </div>
       </div>
     );
@@ -279,6 +290,14 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
+      {/* Hero greeting */}
+      <div className="mb-5">
+        <h1 className="text-xl font-bold text-foreground tracking-tight">{greeting}</h1>
+        <p className="text-xs text-muted-foreground mt-0.5">
+          Here is your financial overview for today.
+        </p>
+      </div>
+
       {/* Draggable Dashboard Cards */}
       <div className="flex-1 min-h-0 flex flex-col gap-6">
         <DraggableDashboard

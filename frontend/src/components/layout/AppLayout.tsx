@@ -5,6 +5,7 @@ import { useSessionTimeout } from "@/hooks/useSessionTimeout";
 import { cn } from "@/lib/utils";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
+import AgentPanel from "./AgentPanel";
 import { useTranslation } from "react-i18next";
 
 const SESSION_TIMEOUT_MS = 60 * 60 * 1000; // 1 hour
@@ -16,18 +17,22 @@ const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[400px]">
     <div className="flex flex-col items-center gap-3">
       <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent" />
-      <p className="text-sm text-muted-foreground">Loading...</p>
+      <p className="text-xs text-muted-foreground">Loading...</p>
     </div>
   </div>
 );
 
 const AppLayout = () => {
   const { t } = useTranslation(['common', 'dashboard', 'layout']);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true); // Default collapsed (rail mode)
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [agentOpen, setAgentOpen] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  // AgentPanel only on customer dashboard
+  const showAgentPanel = location.pathname === "/app/dashboard" || location.pathname === "/app/dashboard/";
 
   const pageTitle = useMemo(() => {
     const path = location.pathname;
@@ -100,9 +105,11 @@ const AppLayout = () => {
   const handleCollapse = useCallback(() => setSidebarCollapsed(prev => !prev), []);
   const handleMobileOpenChange = useCallback((open: boolean) => setMobileSidebarOpen(open), []);
   const handleMenuClick = useCallback(() => setMobileSidebarOpen(prev => !prev), []);
+  const handleAgentToggle = useCallback(() => setAgentOpen(prev => !prev), []);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
+    <div className="flex h-screen overflow-hidden bg-[var(--bg)]">
+      {/* Sidebar (rail or expanded) */}
       <Sidebar
         collapsed={sidebarCollapsed}
         onCollapse={handleCollapse}
@@ -110,6 +117,7 @@ const AppLayout = () => {
         onMobileOpenChange={handleMobileOpenChange}
       />
 
+      {/* Main column: TopBar + Content */}
       <div className="flex-1 flex flex-col min-h-0 min-w-0 overflow-hidden">
         <TopBar
           showMenuButton
@@ -119,8 +127,8 @@ const AppLayout = () => {
         />
 
         <main className={cn(
-          "flex-1 min-h-0 pt-6 pb-6 px-4 overflow-y-auto",
-          isCustomerPage ? "lg:px-4 xl:px-4" : "lg:px-6"
+          "flex-1 min-h-0 pt-5 pb-6 px-4 overflow-y-auto midnight-scrollbar",
+          isCustomerPage ? "lg:px-4 xl:px-5" : "lg:px-6"
         )}>
           <div className={cn(
             'min-w-0 w-full mx-auto',
@@ -132,6 +140,11 @@ const AppLayout = () => {
           </div>
         </main>
       </div>
+
+      {/* Agent Panel — only on customer dashboard */}
+      {showAgentPanel && (
+        <AgentPanel collapsed={!agentOpen} onToggle={handleAgentToggle} />
+      )}
     </div>
   );
 };
